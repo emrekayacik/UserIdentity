@@ -1,0 +1,66 @@
+﻿@model UserIdentity.Models.RoleEditModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+    <input type="hidden" name="RoleId" value="@Model.Role.Id" />
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Add to @Model.Role.Name
+        </div>
+    </div>
+    <table class="table table-striped">
+        @if (Model.NonMembers.Count() == 0)
+        {
+            <tr> <td colspan="2">Bu role atanabilecek kullanıcı yok</td></tr>
+        }
+        else
+        {
+            <tr>
+                <td>User Id</td>
+                <td>User</td>
+            </tr>
+            foreach (var user in Model.NonMembers)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td><input type="checkbox" name="IdsToAdd" value="@user.Id" /></td>
+                </tr>
+            }
+        }
+    </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Remove from @Model.Role.Name
+        </div>
+    </div>
+    <table class="table table-striped">
+        @if (Model.Members.Count() == 0)
+        {
+            <tr> <td colspan="2">Bu role eklenmiş bir kullanıcı yok</td></tr>
+        }
+        else
+        {
+            <tr>
+                <td>User Id</td>
+                <td>User</td>
+            </tr>
+            foreach (var user in Model.Members)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td><input type="checkbox" name="IdsToDelete" value="@user.Id" /></td>
+                </tr>
+            }
+        }
+    </table>
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}
+
